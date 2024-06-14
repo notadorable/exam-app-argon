@@ -16,6 +16,8 @@ class PageController extends Controller
     {
         if (view()->exists("pages.{$page}")) {
             return view("pages.{$page}");
+        } else if (view()->exists("question.{$page}")){
+            return view("question.{$page}");
         }
 
         return abort(404);
