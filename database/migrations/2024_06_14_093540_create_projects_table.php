@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->increments('project_id');
+            $table->increments('id');
             $table->string('project_name', 255);
             $table->text('project_description')->nullable();
             $table->integer('is_active')->length(11);
@@ -24,9 +24,8 @@ return new class extends Migration
             $table->dateTime('deleted_time')->nullable();
 
             // Foreign keys
-            $table->foreign('project_id')->references('project_id')->on('jadwal');
-            $table->foreign('project_id')->references('project_id')->on('exam_map');
-            $table->foreign('project_id')->references('project_id')->on('participant');
+            $table->foreign('id')->references('project_id')->on('jadwal');
+            $table->foreign('id')->references('project_id')->on('participant');
         });
     }
 

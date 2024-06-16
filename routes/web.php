@@ -53,4 +53,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 	Route::get('/question/index', [MasterQuestionController::class, 'index'])->name('question');
+	Route::get('/question/create', [MasterQuestionController::class, 'create'])->name('question.create');
+	Route::post('/question', [MasterQuestionController::class, 'store'])->name('question.store');
+	Route::get('/question/{subtest_id}', [MasterQuestionController::class, 'show'])->name('question.show');
+	Route::get('/question/{subtest_id}/edit', [MasterQuestionController::class, 'edit'])->name('question.edit');
+	Route::put('/question/{subtest_id}', [MasterQuestionController::class, 'update'])->name('question.update');
+	Route::delete('/question/{subtest_id}', [MasterQuestionController::class, 'destroy'])->name('question.destroy');
 });

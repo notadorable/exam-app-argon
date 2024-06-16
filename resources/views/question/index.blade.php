@@ -8,48 +8,38 @@
                 <div class="card z-index-2 h-100">
                     <div class="card-header pb-0 pt-3 bg-transparent">
                         <h6 class="text-capitalize">Master Question</h6>
+                        <a href="{{ route('question.create') }}" class="btn btn-primary float-right">Create</a>
                     </div>
                     <div class="card-body p-3">
                         <table id="questionsTable" class="table align-items-center mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Role
-                                    </th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Create Date</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Action</th>
+                                    <th style="width: 5%;text-align: center;">No</th>
+                                    <th style="width: 70%;text-align: center;">Subtest</th>
+                                    <th style="text-align: center;">Jumlah Soal</th>
+                                    <th style="text-align: center;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-
-                                <tr>
-                                    <td>
-                                        <div class="d-flex px-3 py-1">
-                                            <div>
-                                                <img src="./img/team-1.jpg" class="avatar me-3" alt="image">
+                                @php $i = 1; @endphp
+                                @foreach($subtests as $subtest)
+                                    <tr>
+                                        <td style="text-align: center;">{{ $i++ }}</td>
+                                        <td>{{ $subtest->subtest_name }}</td>
+                                        <td style="text-align: center;">{{ $subtest->question_count }}</td>
+                    
+                                        <td style="text-align: center;">
+                                            <div class="d-flex gap-2" style="text-align: center;">
+                                                <a href="{{ route('question.show', [$subtest->id]) }}" class="btn btn-info">Show</a>
+                                                <a href="{{ route('question.edit', [$subtest->id]) }}" class="btn btn-primary">Edit</a>
+                                                {{-- {!! Form::open(['method' => 'DELETE','route' => ['question.destroy', $question->id]]) !!}
+                                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                                {!! Form::close() !!} --}}
                                             </div>
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">Admin</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm font-weight-bold mb-0">Admin</p>
-                                    </td>
-                                    <td class="align-middle text-center text-sm">
-                                        <p class="text-sm font-weight-bold mb-0">22/03/2022</p>
-                                    </td>
-                                    <td class="align-middle text-end">
-                                        <div class="d-flex px-3 py-1 justify-content-center align-items-center">
-                                            <p class="text-sm font-weight-bold mb-0">Edit</p>
-                                            <p class="text-sm font-weight-bold mb-0 ps-2">Delete</p>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                    
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

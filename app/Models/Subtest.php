@@ -10,6 +10,7 @@ class Subtest extends Model
     use HasFactory;
 
     protected $fillable = [
+        'subtest_id',
         'formula_id',
         'subtest_name',
         'is_active',
@@ -25,6 +26,6 @@ class Subtest extends Model
 
     public function questions()
     {
-        return $this->hasMany(Question::class);
+        return $this->hasMany(Question::class, 'subtest_id');
     }
 }

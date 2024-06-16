@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('subtests', function (Blueprint $table) {
-            $table->increments('subtest_id');
+            $table->increments('id');
             $table->integer('formula_id')->length(11);
             $table->string('subtest_name', 255);
             $table->integer('is_active')->length(11);

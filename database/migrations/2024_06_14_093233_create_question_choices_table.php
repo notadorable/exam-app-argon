@@ -12,12 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('question_choices', function (Blueprint $table) {
-            $table->increments('choice_id');
+            $table->increments('id');
             $table->integer('question_id')->length(11);
             $table->enum('choice_type', ['A', 'B', 'C', 'D', 'E']); // Modify as per your choice types
             $table->text('choice_name');
-            $table->enum('choice_answer', ['A', 'B', 'C', 'D', 'E']); // Modify as per your choice answers
-            $table->integer('choiceanswer_id')->length(11);
+            $table->enum('choice_answer', ['Y', 'N']);
             $table->integer('is_active')->length(11);
             $table->integer('created_by')->length(11);
             $table->dateTime('created_time');

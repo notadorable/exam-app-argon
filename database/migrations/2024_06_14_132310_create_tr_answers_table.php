@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tr_answers', function (Blueprint $table) {
-            $table->bigIncrements('transwer_id');
+            $table->bigIncrements('id');
             $table->integer('project_id')->length(11);
             $table->bigInteger('participant_id')->length(20);
             $table->integer('question_id')->length(11);
@@ -22,10 +22,10 @@ return new class extends Migration
             $table->dateTime('created_time');
             
             // Foreign keys (optional)
-            $table->foreign('project_id')->references('project_id')->on('projects')->onDelete('cascade');
-            $table->foreign('participant_id')->references('participant_id')->on('participants')->onDelete('cascade');
-            $table->foreign('question_id')->references('question_id')->on('questions')->onDelete('cascade');
-            $table->foreign('choice_id')->references('choice_id')->on('question_choices')->onDelete('cascade');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->foreign('participant_id')->references('id')->on('participants')->onDelete('cascade');
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
+            $table->foreign('choice_id')->references('id')->on('question_choices')->onDelete('cascade');
         });
     }
 
