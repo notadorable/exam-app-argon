@@ -12,6 +12,7 @@ use App\Models\Question;
 use App\Models\QuestionChoice;
 use App\Models\Subtest;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ParticipantController extends Controller
@@ -51,15 +52,16 @@ class ParticipantController extends Controller
             foreach ($map_data as $key => $row) {
 
                 $user = User::where('email', $row['email'])->first();
+                $username = generateRandomString();
                 if (empty($user)) {
-                    $user = new User();
-                    $user->username = generateRandomString();
-                    $user->password = bcrypt($user->username);
+                    $user = User::create([
+                        'username' => $username,
+                        'password' => $username,
+                        'firstname' => $row['firstname'],
+                        'lastname' => $row['lastname'],
+                        'email' => $row['email'],
+                    ]);
                 }
-                $user->firstname = $row['firstname'];
-                $user->lastname = $row['lastname'];
-                $user->email = $row['email'];
-                $user->save();
 
                 Participant::where('nik', $user->username)->delete();
                 Jadwal::where('nik', $user->username)->delete();
