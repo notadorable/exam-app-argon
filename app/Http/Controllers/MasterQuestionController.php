@@ -192,10 +192,25 @@ class MasterQuestionController extends Controller
         return redirect()->route('question')->with('success', 'Subtest updated successfully.');
     }
 
-    public function destroy(Question $question)
-    {
-        $question->delete();
+    public function destroy($subtest_id)
+{
+        $subtest = Subtest::find($subtest_id);
+        if ($subtest) {
+            // Delete associated questions
+            $questions = Question::where('subtest_id', $subtest_id)->get();
+            foreach ($questions as $question) {
+                $question->delete();
+            }
 
-        return redirect()->route('question.index')->with('success', 'Question deleted successfully.');
+            // Delete associated question choices
+            QuestionChoice::where('question_id', $subtest_id)->delete();
+
+            // Delete the subtest
+            $subtest->delete();
+
+            return redirect()->route('question')->with('success', 'Subtest deleted successfully.');
+        } else {
+            return redirect()->route('question')->with('error', 'Subtest not found.');
+        }
     }
 }

@@ -32,9 +32,11 @@
                                             <div class="d-flex gap-2" style="text-align: center;">
                                                 <a href="{{ route('question.show', [$subtest->id]) }}" class="btn btn-info">Show</a>
                                                 <a href="{{ route('question.edit', [$subtest->id]) }}" class="btn btn-primary">Edit</a>
-                                                {{-- {!! Form::open(['method' => 'DELETE','route' => ['question.destroy', $question->id]]) !!}
-                                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                                {!! Form::close() !!} --}}
+                                                <form action="{{ route('question.destroy', [$subtest->id]) }}" method="POST" style="display: inline-block;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>
