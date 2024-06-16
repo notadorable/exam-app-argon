@@ -11,7 +11,6 @@ class Participant extends Model
 
     protected $fillable = [
         'project_id',
-        'map_id',
         'subtest_id',
         'nik',
         'name',

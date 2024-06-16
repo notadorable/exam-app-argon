@@ -14,6 +14,7 @@ class Subtest extends Model
         'formula_id',
         'subtest_name',
         'is_active',
+        'duration',
         'created_by',
         'created_time',
         'updated_by',

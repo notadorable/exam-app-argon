@@ -61,4 +61,5 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::delete('/question/{subtest_id}', [MasterQuestionController::class, 'destroy'])->name('question.destroy');
 
     Route::get('/participant/index', [ParticipantController::class, 'index'])->name('participant');
+    Route::post('/participant/upload', [ParticipantController::class, 'upload'])->name('participant.upload');
 });
