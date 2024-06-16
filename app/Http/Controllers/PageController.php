@@ -18,6 +18,8 @@ class PageController extends Controller
             return view("pages.{$page}");
         } else if (view()->exists("question.{$page}")){
             return view("question.{$page}");
+        } else if (view()->exists("project.{$page}")){
+            return view("project.{$page}");
         }
 
         return abort(404);

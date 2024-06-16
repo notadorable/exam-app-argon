@@ -24,9 +24,10 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            SubtestSeeder::class,
-            QuestionSeeder::class,
-            QuestionChoiceSeeder::class
+            // SubtestSeeder::class,
+            // QuestionSeeder::class,
+            // QuestionChoiceSeeder::class,
+            ProjectSeeder::class
         ]);
     }
 }

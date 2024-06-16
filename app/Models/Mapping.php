@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Subtest extends Model
+class Mapping extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'id',
-        'formula_id',
-        'subtest_name',
+        'project_id',
+        'subtest_id',
+        'durasi',
         'is_active',
-        'duration',
         'created_by',
         'created_time',
         'updated_by',
@@ -23,10 +22,5 @@ class Subtest extends Model
         'deleted_time',
     ];
 
-    public $timestamps = false;
-
-    public function questions()
-    {
-        return $this->hasMany(Question::class, 'subtest_id');
-    }
+    public $timestamps = false; // Disable timestamps
 }

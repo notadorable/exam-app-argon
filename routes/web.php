@@ -30,6 +30,7 @@ use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;
 use App\Http\Controllers\MasterQuestionController;
 use App\Http\Controllers\ParticipantController;
+use App\Http\Controllers\ProjectController;
 
 Route::get('/', function () {return redirect('/dashboard');})->middleware('auth');
 	Route::get('/register', [RegisterController::class, 'create'])->middleware('guest')->name('register');
@@ -59,6 +60,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/question/{subtest_id}/edit', [MasterQuestionController::class, 'edit'])->name('question.edit');
 	Route::put('/question/{subtest_id}', [MasterQuestionController::class, 'update'])->name('question.update');
 	Route::delete('/question/{subtest_id}', [MasterQuestionController::class, 'destroy'])->name('question.destroy');
+
+	Route::get('/project/index', [ProjectController::class, 'index'])->name('project');
+	Route::get('/project/create', [ProjectController::class, 'create'])->name('project.create');
+	Route::post('/project', [ProjectController::class, 'store'])->name('project.store');
+	Route::get('/project/{id}', [ProjectController::class, 'show'])->name('project.show');
+	Route::get('/project/{id}/edit', [ProjectController::class, 'edit'])->name('project.edit');
+	Route::put('/project/{id}', [ProjectController::class, 'update'])->name('project.update');
+	Route::delete('/project/{id}', [ProjectController::class, 'destroy'])->name('project.destroy');
 
     Route::get('/participant/index', [ParticipantController::class, 'index'])->name('participant');
     Route::post('/participant/upload', [ParticipantController::class, 'upload'])->name('participant.upload');
