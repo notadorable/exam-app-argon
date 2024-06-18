@@ -28,9 +28,9 @@ class Project extends Model
         return $this->hasMany(Jadwal::class);
     }
 
-    public function examMaps()
+    public function mapping()
     {
-        return $this->hasMany(ExamMap::class);
+        return $this->hasMany(Mapping::class);
     }
 
     public function participants()

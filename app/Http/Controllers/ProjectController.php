@@ -98,8 +98,9 @@ class ProjectController extends Controller
     public function edit($id)
     {
         $project = Project::find($id);
+        $mapping = Mapping::where('project_id', $id)->get();
         $subtests = Subtest::all();
-        return view('project.edit', compact('project', 'subtests'));
+        return view('project.edit', compact('project', 'subtests', 'mapping'));
     }
 
     /**
@@ -113,16 +114,53 @@ class ProjectController extends Controller
     {
         $validatedData = $request->validate([
             'project_name' => 'required|string',
-            'subtest_id' => 'required|exists:subtests,subtest_id',
+            'project_description' => 'string',
+            'duration' => 'required|numeric', // Assuming duration is a numeric value
+            'subtest_id' => 'required|array', // Assuming subtest_id is an array
+            'subtest_id.*' => 'exists:subtests,id', // Validate each subtest ID
         ]);
 
         $project = Project::find($id);
+
+        // Update project details
         $project->update([
             'project_name' => $validatedData['project_name'],
-            'subtest_id' => $validatedData['subtest_id'],
+            'project_description' => $validatedData['project_description'],
             'updated_by' => Auth::id(),
             'updated_time' => now(),
         ]);
+
+        // Update or create mappings for subtests
+        $existingMappingIds = Mapping::where('project_id', $id)->pluck('subtest_id')->toArray();
+
+        // Delete mappings for subtests that are no longer selected
+        Mapping::where('project_id', $id)
+            ->whereNotIn('subtest_id', $validatedData['subtest_id'])
+            ->delete();
+
+        // Create or update mappings for selected subtests
+        foreach ($validatedData['subtest_id'] as $subtestId) {
+            if (in_array($subtestId, $existingMappingIds)) {
+                // Update existing mapping
+                Mapping::where('project_id', $id)
+                    ->where('subtest_id', $subtestId)
+                    ->update([
+                        'durasi' => $validatedData['duration'],
+                        'updated_by' => Auth::id(),
+                        'updated_time' => now(),
+                    ]);
+            } else {
+                // Create new mapping
+                Mapping::create([
+                    'project_id' => $id,
+                    'subtest_id' => $subtestId,
+                    'durasi' => $validatedData['duration'],
+                    'is_active' => 1,
+                    'created_by' => Auth::id(),
+                    'created_time' => Carbon::now(),
+                ]);
+            }
+        }
 
         return redirect()->route('project')->with('success', 'Project updated successfully.');
     }
@@ -136,7 +174,10 @@ class ProjectController extends Controller
     public function destroy($id)
     {
         $project = Project::find($id);
+
         if ($project) {
+            Mapping::where('project_id', $id)->delete();
+
             $project->delete();
             return redirect()->route('project')->with('success', 'Project deleted successfully.');
         } else {
