@@ -23,7 +23,13 @@
 								{{ Form::label('subtest_name', 'Subtest Name', ['class'=>'form-label']) }}
 								{{ Form::text('subtest_name', null, array('class' => 'form-control')) }}
 								{{ Form::hidden('formula_id', 1) }}
+							</div>
 
+							<div class="row">
+								<div class="col-md-6 form-group">
+									{{ Form::label('duration', 'Duration', ['class'=>'form-label']) }}
+									{{ Form::text('duration', null, array('class' => 'form-control', 'oninput' => 'this.value = this.value.replace(/[^0-9]/g, \'\')')) }}
+								</div>
 							</div>
 
 							<div class="mb-3">

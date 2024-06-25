@@ -25,6 +25,13 @@
                             {{ Form::hidden('formula_id', 1) }}
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                {{ Form::label('duration', 'Duration', ['class'=>'form-label']) }}
+                                {{ Form::text('duration', $subtest->durasi, array('class' => 'form-control', 'oninput' => 'this.value = this.value.replace(/[^0-9]/g, \'\')')) }}
+                            </div>
+                        </div>
+
                         <div class="mb-3">
                             <button type="button" class="btn btn-info" id="addQuestionButton">Add Question</button>
                         </div>
@@ -53,7 +60,7 @@
                                                         {{ Form::text('choice_name[' . $question->id . '][' . $choiceIndex . ']', $choice->choice_name, array('class' => 'form-control')) }}
                                                         <div class="form-check">
                                                             {{ Form::hidden('choice_answer[' . $question->id . '][' . $choiceIndex . ']', 'false') }}
-															{{ Form::radio('choice_answer[' . $question->id . '][' . $choiceIndex . ']', 'true', $choice->choice_answer == 'Y' ? true : false, ['class' => 'form-check-input', 'id' => 'customRadio' . $question->id . $choiceIndex]) }}
+                                                            {{ Form::radio('choice_answer[' . $question->id . '][' . $choiceIndex . ']', 'true', $choice->choice_answer == 'Y' ? true : false, ['class' => 'form-check-input', 'id' => 'customRadio' . $question->id .'_'. $choiceIndex, 'onclick' => 'toggleOtherChoices(' . $question->id . ','.$choiceIndex.')']) }}
                                                             <label class="form-check-label" for="customRadio{{ $question->id }}{{ $choiceIndex }}">Correct Answer</label>
                                                         </div>
                                                     </div>
@@ -118,7 +125,7 @@
                             {{ Form::text('choice_name[${questionIndex}][${choiceCount}]', null, array('class' => 'form-control')) }}
 							<div class="form-check">
 								{{ Form::hidden('choice_answer[${questionIndex}][${choiceCount}]', 'false') }}
-								{{ Form::radio('choice_answer[${questionIndex}][${choiceCount}]', 'true', false, ['class' => 'form-check-input', 'id' => 'customRadio${questionIndex}_${choiceCount}']) }}
+								{{ Form::radio('choice_answer[${questionIndex}][${choiceCount}]', 'true', false, ['class' => 'form-check-input', 'id' => 'customRadio${questionIndex}_${choiceCount}', 'onclick' => 'toggleOtherChoices(${questionIndex}, ${choiceCount})']) }}
 								<label class="form-check-label" for="customRadio${questionIndex}_${choiceCount}">Correct Answer</label>
 							</div>
 
@@ -142,5 +149,18 @@
 	function removeChoice(choiceId) {
 		$('#' + choiceId).remove();
 	}
+
+	function toggleOtherChoices(questionId, index) {
+        // Get all radio buttons for the current question
+        var radioButtons = $(`#questionField-${questionId} input[type="radio"]`);
+        console.log(radioButtons);
+        // Iterate through the radio buttons and uncheck them if they are not the selected one
+        radioButtons.each(function() {
+            // console.log($(this).attr('id') !== `customRadio${questionId}_${$(this).closest('div.form-check').siblings('input[type="text"]').attr('id').split('_')[1]}`);
+            if ($(this).attr('id') !== `customRadio${questionId}_${index}`) {
+                $(this).prop('checked', false);
+            }
+        });
+    }
 </script>
 @endpush

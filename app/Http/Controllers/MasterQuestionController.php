@@ -35,9 +35,18 @@ class MasterQuestionController extends Controller
         return view('question.index', ['subtests'=>$subtests]);
     }
 
-    public function show(Question $question)
+    public function show($subtest_id) // Changed parameter to Subtest
     {
-        return view('question.show', compact('question'));
+        $subtest = Subtest::find($subtest_id);
+
+        // Fetch questions associated with the subtest
+        $questions = $subtest->questions;
+
+        // Fetch choices for the questions
+        $choices = QuestionChoice::whereIn('question_id', $questions->pluck('id'))->get();
+
+        // Pass data to the view
+        return view('question.show', compact('subtest', 'questions', 'choices'));
     }
 
     public function create()
@@ -50,6 +59,7 @@ class MasterQuestionController extends Controller
         // dd($request->all());
         $validatedData = $request->validate([
             'subtest_name' => 'required|string',
+            'duration' => 'required|numeric',
             'question_name' => 'array',
             'question_name.*' => 'required|string',
             'choice_name' => 'array',
@@ -61,6 +71,7 @@ class MasterQuestionController extends Controller
         $subtest = Subtest::create([
             'formula_id' => 1,
             'subtest_name' => $validatedData['subtest_name'],
+            'duration' => $validatedData['duration'],
             'is_active' => 1,
             'created_by' => Auth::id(),
             'created_time' => now(),
@@ -126,8 +137,10 @@ class MasterQuestionController extends Controller
 
     public function update(Request $request, $subtest_id)
     {
+        // dd($request->all());
         $validatedData = $request->validate([
             'subtest_name' => 'required|string',
+            'duration' => 'required|numeric',
             'question_name' => 'array',
             'question_name.*' => 'required|string',
             'choice_name' => 'array',
@@ -142,17 +155,15 @@ class MasterQuestionController extends Controller
         $subtest = Subtest::find($subtest_id);
         $subtest->update([
             'subtest_name' => $validatedData['subtest_name'],
+            'duration' => $validatedData['duration'],
             'updated_by' => Auth::id(),
             'updated_time' => now(),
         ]);
 
-        // Update or create questions and choices
         foreach ($validatedData['question_name'] as $questionId => $questionName) {
-            // Check if the question exists
             $question = Question::find($questionId);
 
             if ($question) {
-                // Update existing question
                 $question->update([
                     'subtest_id' => $subtest->id,
                     'question_name' => $questionName,
@@ -160,7 +171,6 @@ class MasterQuestionController extends Controller
                     'updated_time' => now(),
                 ]);
             } else {
-                // Create new question
                 $question = Question::create([
                     'subtest_id' => $subtest->id,
                     'question_name' => $questionName,

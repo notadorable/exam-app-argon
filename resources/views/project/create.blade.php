@@ -32,13 +32,6 @@
 									{{ Form::textarea('project_description', null, array('class' => 'form-control', 'rows' => 3)) }}
 								</div>
 							</div>
-
-							<div class="row">
-								<div class="col-md-6 form-group">
-									{{ Form::label('duration', 'Duration', ['class'=>'form-label']) }}
-									{{ Form::text('duration', null, array('class' => 'form-control', 'oninput' => 'this.value = this.value.replace(/[^0-9]/g, \'\')')) }}
-								</div>
-							</div>
 							
 							<div class="row">
 								<div class="col-md-6 form-group">

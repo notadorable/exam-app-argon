@@ -65,7 +65,9 @@ class ParticipantController extends Controller
                     ]);
                 }
 
-                Participant::where('nik', $user->username)->delete();
+                Participant::where('project_id', $project_id)
+                         ->where('nik', $user->username)
+                         ->delete();
                 Jadwal::where('nik', $user->username)->delete();
 
                 $start_time = $row['start_time'];

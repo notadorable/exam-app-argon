@@ -6,7 +6,7 @@ use App\Models\Mapping;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Subtest;
-use App\Models\Question;
+use App\Models\Participant;
 use App\Models\QuestionChoice;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -82,12 +82,11 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::find($id);
-        $subtest = Subtest::find($project->subtest_id);
-        $questions = Question::where('subtest_id', $project->subtest_id)->get();
-        $choices = QuestionChoice::whereIn('question_id', $questions->pluck('question_id'))->get();
+        $participants = Participant::where('project_id', $id)->get();
 
-        return view('project.show', compact('project', 'subtest', 'questions', 'choices'));
+        return view('project.show', compact('project', 'participants'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -115,7 +114,6 @@ class ProjectController extends Controller
         $validatedData = $request->validate([
             'project_name' => 'required|string',
             'project_description' => 'string',
-            'duration' => 'required|numeric', // Assuming duration is a numeric value
             'subtest_id' => 'required|array', // Assuming subtest_id is an array
             'subtest_id.*' => 'exists:subtests,id', // Validate each subtest ID
         ]);
@@ -145,7 +143,6 @@ class ProjectController extends Controller
                 Mapping::where('project_id', $id)
                     ->where('subtest_id', $subtestId)
                     ->update([
-                        'durasi' => $validatedData['duration'],
                         'updated_by' => Auth::id(),
                         'updated_time' => now(),
                     ]);
@@ -154,7 +151,7 @@ class ProjectController extends Controller
                 Mapping::create([
                     'project_id' => $id,
                     'subtest_id' => $subtestId,
-                    'durasi' => $validatedData['duration'],
+                    'durasi' => 0,
                     'is_active' => 1,
                     'created_by' => Auth::id(),
                     'created_time' => Carbon::now(),
