@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <button type="button" class="btn btn-secondary" id="addQuestionButton">Add Question</button>
+                            <button type="button" class="btn btn-info" id="addQuestionButton">Add Question</button>
                         </div>
 
                         <div id="questionFields" class="mb-5">
@@ -39,9 +39,9 @@
                                             {{ Form::textarea('question_name[' . $question->id . ']', $question->question_name, array('class' => 'form-control', 'rows' => 3)) }}
                                         </div>
                                         <div class="col-md-3 d-flex align-items-center">
-                                            <button type="button" class="btn btn-danger me-2" onclick="removeQuestionField('questionField-{{ $question->id }}')">Remove</button>
+                                            <button type="button" class="btn btn-danger me-2" onclick="removeQuestionField('questionField-{{ $question->id }}')"><i class="fa-solid fa-trash"></i></button>
                                         </div>
-                                        <div class="col-md-12 mt-2"><button type="button" class="btn btn-secondary" onclick="addChoice('questionField-{{ $question->id }}')">Add Choice</button></div>
+                                        <div class="col-md-12 mt-2"><button type="button" class="btn btn-success" onclick="addChoice('questionField-{{ $question->id }}')">Add Choice</button></div>
                                     </div>
                                     <div id="choiceFields-{{ $question->id }}">
                                         @php $choiceIndex = 0; @endphp
@@ -58,7 +58,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 d-flex align-items-center">
-                                                        <button type="button" class="btn btn-danger ms-2" onclick="removeChoice('choiceField-{{ $question->id }}-{{ $choiceIndex }}')">Remove</button>
+                                                        <button type="button" class="btn btn-danger ms-2" onclick="removeChoice('choiceField-{{ $question->id }}-{{ $choiceIndex }}')"><i class="fa-solid fa-trash"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -93,9 +93,9 @@
 							{{ Form::textarea('question_name[]', null, array('class' => 'form-control', 'rows' => 3)) }}
 						</div>
 						<div class="col-md-3 d-flex align-items-center">
-							<button type="button" class="btn btn-danger me-2" onclick="removeQuestionField('questionField-${questionCount}')">Remove</button>
+							<button type="button" class="btn btn-danger me-2" onclick="removeQuestionField('questionField-${questionCount}')"><i class="fa-solid fa-trash"></i></button>
 						</div>
-						<div class="col-md-12 mt-2"><button type="button" class="btn btn-secondary" onclick="addChoice('questionField-${questionCount}')">Add Choice</button></div>
+						<div class="col-md-12 mt-2"><button type="button" class="btn btn-success" onclick="addChoice('questionField-${questionCount}')">Add Choice</button></div>
 					</div>
 					<div id="choiceFields-${questionCount}">
 					</div>
@@ -124,7 +124,7 @@
 
                         </div>
                         <div class="col-md-2 d-flex align-items-center">
-                            <button type="button" class="btn btn-danger ms-2" onclick="removeChoice('choiceField-${questionFieldId}-${choiceCount}')">Remove</button>
+                            <button type="button" class="btn btn-danger ms-2" onclick="removeChoice('choiceField-${questionFieldId}-${choiceCount}')"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
                 </div>

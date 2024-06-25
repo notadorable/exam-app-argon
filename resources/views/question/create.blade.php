@@ -58,7 +58,7 @@
 							{{ Form::textarea('question_name[]', null, array('class' => 'form-control', 'rows' => 3)) }}
 						</div>
 						<div class="col-md-3 d-flex align-items-center">
-							<button type="button" class="btn btn-danger me-2" onclick="removeQuestionField('questionField-${questionCount}')">Remove</button>
+							<button type="button" class="btn btn-danger me-2" onclick="removeQuestionField('questionField-${questionCount}')"><i class="fa-solid fa-trash"></i></button>
 						</div>
 						<div class="col-md-12 mt-2"><button type="button" class="btn btn-secondary" onclick="addChoice('questionField-${questionCount}')">Add Choice</button></div>
 					</div>
@@ -89,7 +89,7 @@
 
                         </div>
                         <div class="col-md-2 d-flex align-items-center">
-                            <button type="button" class="btn btn-danger ms-2" onclick="removeChoice('choiceField-${questionFieldId}-${choiceCount}')">Remove</button>
+                            <button type="button" class="btn btn-danger ms-2" onclick="removeChoice('choiceField-${questionFieldId}-${choiceCount}')"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
                 </div>
