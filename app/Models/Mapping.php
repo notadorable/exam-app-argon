@@ -23,4 +23,9 @@ class Mapping extends Model
     ];
 
     public $timestamps = false; // Disable timestamps
+
+    public function subtest()
+    {
+        return $this->hasOne(Subtest::class, 'id', 'subtest_id');
+    }
 }

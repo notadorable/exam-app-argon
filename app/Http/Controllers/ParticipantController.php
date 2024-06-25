@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jadwal;
+use App\Models\Mapping;
 use App\Models\Participant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -47,7 +48,8 @@ class ParticipantController extends Controller
                 $map_data[] = $participant;
             }
 
-            $subtest_list = Subtest::where('is_active', 1)->get()->toArray();
+            // $subtest_list = Subtest::where('is_active', 1)->get()->toArray();
+            $subtest_list = Mapping::where('project_id', $project_id)->get();
 
             foreach ($map_data as $key => $row) {
 
@@ -69,9 +71,11 @@ class ParticipantController extends Controller
                 $start_time = $row['start_time'];
 
                 foreach ($subtest_list as $key => $value) {
+                    $subtest = $value->subtest->toArray();
+                    // var_dump($value->subtest);exit;
                     $participant = new Participant();
                     $participant->project_id = $project_id;
-                    $participant->subtest_id = $value['id'];
+                    $participant->subtest_id = $subtest['id'];
                     $participant->nik = $user->username;
                     $participant->name = $user->firstname . ' ' . $user->lastname;
                     $participant->is_active = 1;
@@ -87,7 +91,7 @@ class ParticipantController extends Controller
                         $jadwal->start_date = $row['start_date'];
                         $jadwal->end_date = $row['end_date'];
                         $jadwal->start_time = $start_time;
-                        $jadwal->end_time = date('H:i:s', strtotime('+'.$value['duration'].' minutes', strtotime($start_time)));
+                        $jadwal->end_time = date('H:i:s', strtotime('+'.$subtest['duration'].' minutes', strtotime($start_time)));
                         $jadwal->status_test = 0;
                         $jadwal->is_active = 1;
                         $jadwal->created_by = 'admin';
