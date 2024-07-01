@@ -28,6 +28,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\MasterQuestionController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\ProjectController;
@@ -71,4 +72,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/participant/index', [ParticipantController::class, 'index'])->name('participant');
     Route::post('/participant/upload', [ParticipantController::class, 'upload'])->name('participant.upload');
+
+
+    Route::get('/exam/index', [ExamController::class, 'index'])->name('exam.index');
 });
