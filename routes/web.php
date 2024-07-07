@@ -43,6 +43,7 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 	Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
 	Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
 	Route::get('/dashboard', [HomeController::class, 'index'])->name('home')->middleware('auth');
+
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('/virtual-reality', [PageController::class, 'vr'])->name('virtual-reality');
 	Route::get('/rtl', [PageController::class, 'rtl'])->name('rtl');
@@ -77,4 +78,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/exam/index', [ExamController::class, 'index'])->name('exam');
     Route::get('/exam/question/{subtest_id}/{participant_id}', [ExamController::class, 'question'])->name('exam.question');
     Route::post('/exam/submit', [ExamController::class, 'submit'])->name('exam.submit');
+
+	Route::get('/subtests/{id}', [HomeController::class, 'showSubtests'])->name('home.subtest');
+	Route::get('/projects/{projectId}/subtests/{subtestId}/detail', [HomeController::class, 'showSubtestDetails'])->name('home.subtest-detail');
+
+
 });
