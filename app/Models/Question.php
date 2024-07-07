@@ -29,4 +29,9 @@ class Question extends Model
     {
         return $this->belongsTo(Subtest::class);
     }
+
+    public function choice()
+    {
+        return $this->hasMany(QuestionChoice::class, 'question_id', 'id');
+    }
 }

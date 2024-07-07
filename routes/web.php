@@ -74,5 +74,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/participant/upload', [ParticipantController::class, 'upload'])->name('participant.upload');
 
 
-    Route::get('/exam/index', [ExamController::class, 'index'])->name('exam.index');
+    Route::get('/exam/index', [ExamController::class, 'index'])->name('exam');
+    Route::get('/exam/question/{subtest_id}/{participant_id}', [ExamController::class, 'question'])->name('exam.question');
+    Route::post('/exam/submit', [ExamController::class, 'submit'])->name('exam.submit');
 });

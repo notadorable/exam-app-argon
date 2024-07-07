@@ -23,7 +23,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('pages.dashboard');
+        if (auth()->user()->is_admin) {
+            return view('pages.dashboard');
+        } else {
+            return redirect()->route('exam', []);
+        }
+
     }
 
     public function questionindex()

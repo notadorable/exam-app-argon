@@ -36,4 +36,9 @@ class Participant extends Model
     {
         return $this->belongsTo(Subtest::class);
     }
+
+    public function jadwal()
+    {
+        return $this->hasOne(Jadwal::class, 'participant_id', 'id');
+    }
 }
