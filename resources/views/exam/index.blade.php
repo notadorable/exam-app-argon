@@ -6,19 +6,65 @@
     background-color: #ffeeea !important;
     box-shadow: none;
 }
+
+.subtest-title {
+    font-size: 14px;
+    font-weight: 800;
+}
+.profile-card {
+      max-width: 400px;
+      /* margin: 20px auto; */
+      /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 20px;
+    }
+    .profile-card img {
+        width: 40;
+    height: 40;
+    border-radius: 50%;
+    object-fit: cover;
+    }
+    .profile-card .card-body {
+      flex: 1;
+    }
+
+    .navbar-vertical {
+        overflow: hidden !important;
+    }
+
+    .navbar-collapse {
+        overflow: auto
+    }
 </style>
 
 @section('content')
 <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 "
     id="sidenav-main">
         <div class="sidenav-header">
-            <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
-                aria-hidden="true" id="iconSidenav"></i>
-            <a class="navbar-brand m-0" href="{{ route('home') }}"
-                target="_blank">
-                <img src="{{asset('./img/logo-ct-dark.png')}}" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold">Exam Management</span>
-            </a>
+            <div class="profile-card" style="gap: 8px;">
+                <img src="https://via.placeholder.com/80" alt="Profile Photo">
+                <div class="w-100">
+                  <h5 class="card-title mb-0">{{auth()->user()->firstname}} {{auth()->user()->lastname}}</h5>
+                  <p class="card-text">{{auth()->user()->email}}</p>
+                </div>
+              </div>
+        </div>
+        <div class="p-3">
+            <form class="mb-0" role="form" method="post" action="{{ route('logout') }}" id="logout-form">
+                @csrf
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                    class="font-weight-bold px-0">
+                        <i class="fa fa-user me-sm-1"></i>
+                        <span class="d-sm-inline d-none">Log out</span>
+                    </a>
+                </div>
+            </form>
         </div>
         <hr class="horizontal dark mt-0">
         <div class="collapse navbar-collapse  w-auto " style="height: 100%;" id="sidenav-collapse-main">
@@ -32,7 +78,7 @@
                             </div> --}}
                             <div class="border  w-100 p-2" style="border-radius: 8px;">
                                 <div class="d-flex flex-column">
-                                    <div class="h5">{{$p->subtest->subtest_name}}
+                                    <div class="subtest-title">{{$p->subtest->subtest_name}}
                                     </div>
                                     <div style="font-size: 12px;color: #acacac;">
                                        <i class="fa fa-calendar"></i> {{$p->jadwal->start_date}}
