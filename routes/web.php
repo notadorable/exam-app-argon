@@ -52,7 +52,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/profile-static', [PageController::class, 'profile'])->name('profile-static');
 	Route::get('/sign-in-static', [PageController::class, 'signin'])->name('sign-in-static');
 	Route::get('/sign-up-static', [PageController::class, 'signup'])->name('sign-up-static');
-	Route::get('/{page}', [PageController::class, 'index'])->name('page');
+	// Route::get('/{page}', [PageController::class, 'index'])->name('page');
 	Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 	Route::get('/question/index', [MasterQuestionController::class, 'index'])->name('question');
@@ -75,7 +75,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/participant/upload', [ParticipantController::class, 'upload'])->name('participant.upload');
 
 
-    Route::get('/exam/index', [ExamController::class, 'index'])->name('exam');
+    // Route::resource('exam', 'ExamController');
+    Route::get('/exam', [ExamController::class, 'index'])->name('exam');
     Route::get('/exam/question/{subtest_id}/{participant_id}', [ExamController::class, 'question'])->name('exam.question');
     Route::post('/exam/submit', [ExamController::class, 'submit'])->name('exam.submit');
 
