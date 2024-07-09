@@ -32,7 +32,7 @@ class LoginController extends Controller
             if (auth()->user()->is_admin) {
                 return redirect()->intended('dashboard');
             } else {
-                return redirect()->intended('exam/index');
+                return redirect('exam/index');
             }
 
 

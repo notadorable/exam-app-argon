@@ -365,14 +365,18 @@ function bindEvents() {
                             ${response.message}
                         </div>
                     `)
+
+                    window.location.reload()
                 } else {
                     $('#response-message').html(`
                         <div class="alert alert-danger text-white" role="alert">
                             ${response.message}
                         </div>
                     `)
+
+                    $('#newSubmit').attr('disabled', false)
                 }
-                $('#newSubmit').attr('disabled', false)
+
             },
             error: function(xhr) {
                 $('#response-message').html(`
