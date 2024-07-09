@@ -67,7 +67,7 @@
             </form>
         </div>
         <hr class="horizontal dark mt-0">
-        <div class="collapse navbar-collapse  w-auto " style="height: 100%;" id="sidenav-collapse-main">
+        <div class="collapse navbar-collapse  w-auto " style="height: 65%;" id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 @foreach($participant as $i => $p)
                     <li class="nav-item">

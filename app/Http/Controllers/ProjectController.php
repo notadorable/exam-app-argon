@@ -82,7 +82,7 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::find($id);
-        $participants = Participant::where('project_id', $id)->get();
+        $participants = Participant::where('project_id', $id)->orderBy('name', 'asc')->get();
 
         return view('project.show', compact('project', 'participants'));
     }

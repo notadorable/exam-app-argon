@@ -29,7 +29,7 @@
                                     <input type="file" class="form-control" name="file" id="exampleFormControlInput1" placeholder="Participant list">
                                 </div>
                                 <div class="text-right" style="text-align:right;">
-                                    <button type="submit" class="btn btn-primary float-right">Upload Data</a>
+                                    <button type="submit" class="btn btn-primary float-right" id="upload-btn">Upload Data</a>
                                 </div>
                             {{ Form::close() }}
                             <div id="result"></div>
@@ -40,9 +40,12 @@
                             <thead>
                                 <tr>
                                     <th style="width: 5%;text-align: center;">No</th>
-                                    <th style="width: 20%;text-align: center;">NIK</th>
+                                    {{-- <th style="width: 20%;text-align: center;">NIK</th> --}}
                                     <th style="width: 30%;text-align: center;">Name</th>
+                                    <th style="width: 30%;text-align: center;">Email</th>
+                                    <th style="width: 30%;text-align: center;">Datetime</th>
                                     <th style="width: 30%;text-align: center;">Subtest</th>
+                                    <th style="width: 30%;text-align: center;">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,9 +53,15 @@
                                 @foreach ($participants as $participant)
                                     <tr>
                                         <td style="text-align: center;">{{ $i++ }}</td>
-                                        <td style="text-align: center;">{{ $participant->nik }}</td>
+                                        {{-- <td style="text-align: center;">{{ $participant->nik }}</td> --}}
                                         <td style="text-align: center;">{{ $participant->name }}</td>
+                                        <td style="text-align: center;">
+                                            <div>{{ $participant->user->email }}</div>
+                                            <div>{{ $participant->user->username }}</div>
+                                        </td>
+                                        <td style="text-align: center;">{{ $participant->jadwal->start_time }} - {{ $participant->jadwal->end_time }}</td>
                                         <td style="text-align: center;">{{ $participant->subtest->subtest_name }}</td>
+                                        <td style="text-align: center;">{{ $participant->jadwal->status_test == 1 ? 'Selesai' : 'Belum Mulai' }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -82,6 +91,9 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
+                    beforeSend: function(response) {
+                        $('#upload-btn').attr('disabled', true)
+                    },
                     success: function(response) {
                         if(response.success) {
                             var result = '<h1>Parsed Excel Data</h1>';
@@ -95,10 +107,14 @@
                                 location.reload();
                             });
                         }
+
+                        $('#upload-btn').attr('disabled', false)
                     },
                     error: function(xhr) {
                         var errorMessage = '<div>Error: ' + xhr.status + ' ' + xhr.statusText + '</div>';
                         $('#messages').html(errorMessage);
+
+                        $('#upload-btn').attr('disabled', false)
                     }
                 });
             });

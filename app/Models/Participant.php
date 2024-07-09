@@ -39,6 +39,11 @@ class Participant extends Model
 
     public function jadwal()
     {
-        return $this->hasOne(Jadwal::class, 'participant_id', 'id');
+        return $this->hasOne(Jadwal::class, 'participant_id', 'id')->orderBy('start_time', 'DESC');
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'username', 'nik');
     }
 }
